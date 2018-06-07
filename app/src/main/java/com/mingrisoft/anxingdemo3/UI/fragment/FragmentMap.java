@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -33,11 +33,15 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.mingrisoft.anxingdemo3.R;
+import com.mingrisoft.anxingdemo3.UI.ClusterOverlay;
+import com.mingrisoft.anxingdemo3.UI.model.RegionItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,8 +54,6 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     private MyLocationStyle mMyLocationStyle;
     private LocationSource.OnLocationChangedListener mListener;
     private UiSettings mUiSettings;
-    private Button basicmap;
-    private Button nightmap;
     private Marker locMarker;
     private Circle ac;
     private Circle c;
@@ -60,13 +62,20 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     private final Interpolator interpolator1 = new LinearInterpolator();
     private TimerTask mTimerTask;
     private Timer mTimer = new Timer();
+
+    //-------zxu-------------
+    private int clusterRadius = 100;
+    private Map<Integer,Drawable> mBackDrawAbles = new HashMap<Integer,Drawable>();
+    private ClusterOverlay mClusterOverlay;
+    //-----------------------
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.anxing_map, container, false);
         //mapView
         //startActivity(new Intent(getContext(),AXMap.class));
-                mapView = (MapView)view.findViewById(R.id.map);
+        mapView = (MapView)view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         init();
         return view;
@@ -99,6 +108,20 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
 
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
        // ChangeTime();
+
+
+//        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                double lat = Math.random() + 38.015232204861114;
+//                double lon = Math.random() + 112.4493324110243;
+//
+//                LatLng latLng1 = new LatLng(lat, lon, false);
+//                RegionItem regionItem = new RegionItem(latLng1,
+//                        "test");
+//                mClusterOverlay.addClusterItem(regionItem);
+//            }
+//        });
     }
 
     private Marker addMarker(LatLng point) {
