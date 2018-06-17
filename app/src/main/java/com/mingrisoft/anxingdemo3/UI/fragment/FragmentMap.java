@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.CheckBox;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -37,12 +38,15 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.mingrisoft.anxingdemo3.R;
 import com.mingrisoft.anxingdemo3.UI.ClusterItem;
 import com.mingrisoft.anxingdemo3.UI.ClusterOverlay;
 import com.mingrisoft.anxingdemo3.UI.model.ClusterClickListener;
 import com.mingrisoft.anxingdemo3.UI.model.ClusterRender;
 import com.mingrisoft.anxingdemo3.UI.model.RegionItem;
+import com.mingrisoft.anxingdemo3.UI.util.PathSmoothTool;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,6 +82,11 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     private int clusterRadius = 100;
     private Map<Integer,Drawable> mBackDrawAbles = new HashMap<Integer,Drawable>();
     private ClusterOverlay mClusterOverlay;
+
+    private List<LatLng> mOriginList = new ArrayList<LatLng>();
+//    private Polyline mOriginPolyline, mkalmanPolyline;
+//    private CheckBox mOriginbtn, mkalmanbtn;
+    private PathSmoothTool mpathSmoothTool;
     //-----------------------
 
     @Override
@@ -95,6 +104,10 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
         if (aMap == null) {
             aMap = mapView.getMap();
         }
+
+        mpathSmoothTool = new PathSmoothTool();
+        mpathSmoothTool.setIntensity(4);
+
         aMap.setOnMapLoadedListener((AMap.OnMapLoadedListener) this);
         aMap.setOnMapClickListener((AMap.OnMapClickListener) this);
         aMap.setLocationSource((LocationSource) this);// 设置定位监听
@@ -243,6 +256,10 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
                 LatLng mylocation = new LatLng(aMapLocation.getLatitude(),
                         aMapLocation.getLongitude());
+                //---zxu---
+                aMap.addPolyline(new PolylineOptions().add(mylocation).color(Color.GREEN));
+                //---zxu---
+
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 19));
                 addLocationMarker(aMapLocation);
             } else {
