@@ -77,10 +77,6 @@
         <activity android:name=".UI.activity.ActivityAllRecog" />
         <activity android:name=".UI.baidu.OnlineSetting" />
 
-        <service
-            android:name=".UI.service.soundrecording"
-            android:exported="false" />
-
 
         <activity android:name=".UI.activity.VoiceMonitorActivity"></activity>
     </application>

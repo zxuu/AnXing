@@ -3,7 +3,11 @@ package com.mingrisoft.anxingdemo3.UI.fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -29,23 +33,30 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.mingrisoft.anxingdemo3.R;
+import com.mingrisoft.anxingdemo3.UI.ClusterItem;
 import com.mingrisoft.anxingdemo3.UI.ClusterOverlay;
+import com.mingrisoft.anxingdemo3.UI.model.ClusterClickListener;
+import com.mingrisoft.anxingdemo3.UI.model.ClusterRender;
 import com.mingrisoft.anxingdemo3.UI.model.RegionItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FragmentMap  extends android.support.v4.app.Fragment implements AMap.OnMapLoadedListener, AMap.OnMapClickListener, LocationSource, AMapLocationListener, View.OnClickListener {
+public class FragmentMap  extends android.support.v4.app.Fragment implements AMap.OnMapLoadedListener
+        , AMap.OnMapClickListener, LocationSource, AMapLocationListener, View.OnClickListener,ClusterRender,ClusterClickListener{
     private AMap aMap;
     private MapView mapView;
     private MapView mMapView=null;
@@ -139,6 +150,8 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     @Override
     public void onResume() {
         super.onResume();
+        //--------zxu---
+//        mapView.onResume();
     }
 
     /**
@@ -147,6 +160,8 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     @Override
     public void onPause() {
         super.onPause();
+        //----zxu---
+//        mapView.onPause();
     }
 
     /**
@@ -163,6 +178,10 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //---zxu---
+//        mClusterOverlay.onDestroy();
+//        mapView.onDestroy();
+        //---zxu---
         if (mTimerTask != null) {
             mTimerTask.cancel();
             mTimerTask = null;
@@ -263,19 +282,100 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
         mTimer.schedule(mTimerTask, 0, 30);
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
+//    @Override
+//    public void onClick(Marker marker, List<ClusterItem> clusterItems) {
+//
+//    }
 
     @Override
     public void onMapClick(LatLng latLng) {
 
     }
 
+    //地图上点标记
     @Override
     public void onMapLoaded() {
+        //测试数据
+        new Thread() {
 
+            public void run() {
+                List<ClusterItem> items = new ArrayList<>();
+                //随机100个点
+                for (int i = 0; i < 100; i++) {
+                    double lat  = Math.random() + 38.01522976345486;
+                    double lon = Math.random() + 112.4493324110243;
+
+                    LatLng latLng = new LatLng(lat, lon, false);
+                    RegionItem regionItem = new RegionItem(latLng, "test" + i);
+                    items.add(regionItem);
+                }
+
+                mClusterOverlay = new ClusterOverlay(aMap, items, dp2px(getContext(), clusterRadius), getContext());
+                mClusterOverlay.setClusterRenderer(FragmentMap.this);
+                mClusterOverlay.setOnClusterClickListener(FragmentMap.this);
+            }
+
+        }.start();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onClick(Marker marker, List<ClusterItem> clusterItems) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (ClusterItem clusterItem : clusterItems) {
+            builder.include(clusterItem.getPosition());
+        }
+        LatLngBounds latLngBounds = builder.build();
+        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0)
+        );
+    }
+
+    @Override
+    public Drawable getDrawAble(int clusterNum) {
+        int radius = dp2px(getContext(), 80);
+        if (clusterNum == 1) {
+            Drawable bitmapDrawable = mBackDrawAbles.get(1);
+            if (bitmapDrawable == null) {
+                bitmapDrawable =
+                        getContext().getResources().getDrawable(
+                                R.drawable.gantanhao2);
+                mBackDrawAbles.put(1, bitmapDrawable);
+            }
+
+            return bitmapDrawable;
+        } else if (clusterNum < 5) {
+
+            Drawable bitmapDrawable = mBackDrawAbles.get(2);
+            if (bitmapDrawable == null) {
+                bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
+                        Color.argb(159, 210, 154, 6)));
+                mBackDrawAbles.put(2, bitmapDrawable);
+            }
+
+            return bitmapDrawable;
+        } else if (clusterNum < 10) {
+            Drawable bitmapDrawable = mBackDrawAbles.get(3);
+            if (bitmapDrawable == null) {
+                bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
+                        Color.argb(199, 217, 114, 0)));
+                mBackDrawAbles.put(3, bitmapDrawable);
+            }
+
+            return bitmapDrawable;
+        } else {
+            Drawable bitmapDrawable = mBackDrawAbles.get(4);
+            if (bitmapDrawable == null) {
+                bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
+                        Color.argb(235, 215, 66, 2)));
+                mBackDrawAbles.put(4, bitmapDrawable);
+            }
+
+            return bitmapDrawable;
+        }
     }
 
 
@@ -346,4 +446,25 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
         aMap.showMapText(true);
 
     }
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public int dp2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    private Bitmap drawCircle(int radius, int color) {
+
+        Bitmap bitmap = Bitmap.createBitmap(radius * 2, radius * 2,
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        RectF rectF = new RectF(0, 0, radius * 2, radius * 2);
+        paint.setColor(color);
+        canvas.drawArc(rectF, 0, 360, true, paint);
+        return bitmap;
+    }
+
 }
