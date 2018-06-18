@@ -78,6 +78,8 @@
         <activity android:name=".UI.activity.ActivityOnline" />
         <activity android:name=".UI.activity.ActivityAllRecog" />
         <activity android:name=".UI.baidu.OnlineSetting" />
+        <activity android:name=".UI.activity.LogInActivity"/>
+        <activity android:name=".UI.activity.RegisterActivity"/>
 
 
         <activity android:name=".UI.activity.VoiceMonitorActivity"></activity>
