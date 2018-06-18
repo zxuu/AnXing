@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/voice"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+   >
+
+
+        <Button
+            android:id="@+id/voice_btn"
+            android:layout_marginTop="127dp"
+            android:layout_marginLeft="70dp"
+            android:layout_width="205dp"
+            android:layout_height="70dp"
+            android:text="cs"
+            android:background="#00000000"
+            />
+        <Button
+            android:id="@+id/voice_btn2"
+            android:layout_marginTop="800dp"
+            android:layout_marginLeft="70dp"
+            android:layout_width="205dp"
+            android:layout_height="70dp"
+            android:text="停止"
+            android:background="#00000000"
+            />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
