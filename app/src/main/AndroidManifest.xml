@@ -68,11 +68,11 @@
         <service android:name="com.amap.api.location.APSService">
         </service>
         <activity android:name=".UI.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".UI.SlideHead" />
         <activity android:name=".UI.Userinfo" />
@@ -84,7 +84,13 @@
         <activity android:name=".UI.activity.ActivityOnline" />
         <activity android:name=".UI.activity.ActivityAllRecog" />
         <activity android:name=".UI.baidu.OnlineSetting" />
-        <activity android:name=".UI.activity.LogInActivity"/>
+        <activity android:name=".UI.activity.LogInActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".UI.activity.RegisterActivity"/>
         <activity android:name=".UI.activity.Activity_two_level_function_conversation_two"/>
         <activity android:name=".UI.activity.Activity_two_level_function_conversation"/>
