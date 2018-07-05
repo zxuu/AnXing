@@ -28,9 +28,9 @@ public class AXPopWindows extends AppCompatActivity implements View.OnClickListe
 
     private void inint() {
         yuyinImg = (ImageView) findViewById(R.id.yuyin_btn);
-        shoudianImg = (ImageView) findViewById(R.id.shiping_btn);
-        shipingImg = (ImageView) findViewById(R.id.dianhua_btn);
-        dianhuaImg = (ImageView) findViewById(R.id.shoudian_btn);
+        shoudianImg = (ImageView) findViewById(R.id.shoudian_btn);
+        shipingImg = (ImageView) findViewById(R.id.shiping_btn);
+        dianhuaImg = (ImageView) findViewById(R.id.dianhua_btn);
         yuyinImg.setOnClickListener(this);
         shoudianImg.setOnClickListener(this);
         shipingImg.setOnClickListener(this);

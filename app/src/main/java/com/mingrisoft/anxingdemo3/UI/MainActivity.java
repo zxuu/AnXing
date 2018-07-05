@@ -19,6 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.mingrisoft.anxingdemo3.R;
+import com.mingrisoft.anxingdemo3.UI.activity.Activity_two_level_function_conversation;
+import com.mingrisoft.anxingdemo3.UI.activity.Activity_two_level_function_light;
+import com.mingrisoft.anxingdemo3.UI.activity.Activity_two_level_function_video;
+import com.mingrisoft.anxingdemo3.UI.activity.Activity_two_level_function_voice;
 import com.mingrisoft.anxingdemo3.UI.fragment.FragmentFirstPage;
 import com.mingrisoft.anxingdemo3.UI.fragment.FragmentMap;
 
@@ -33,6 +37,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private PopupWindow popWindows;
     private DisplayMetrics dm;
     ImageView menu;
+
+    ImageView yuyinImg;
+    ImageView shoudianImg;
+    ImageView shipingImg;
+    ImageView dianhuaImg;
 
 
     @Override
@@ -54,7 +63,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     */
     private void initView()
     {
-
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_Mainpage);
         navigationView = (NavigationView) findViewById(R.id.SlideMainlayout);
         menu= (ImageView) findViewById(R.id.UserIconMenu);
@@ -94,7 +102,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 clickAuth();
                 break;
             case R.id.toggle_btn:
-                clickTog();
+                clickTog();//加号按钮
                 break;
             case R.id.UserIconMenu://点击菜单，跳出侧滑菜单
                 if (drawerLayout.isDrawerOpen(navigationView)){
@@ -207,6 +215,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(R.layout.popwindows,null);
+
+//            ImageView imageView = (ImageView) view.findViewById(R.id.dianhua_btn);
+//            imageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    startActivity(new Intent(MainActivity.this, Activity_two_level_function_conversation.class));
+//                }
+//            });
+            //---zxu---
+            setFourBtnListener(view);
+            //---zxu---
             dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             popWindows = new PopupWindow(view,dm.widthPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -231,13 +250,45 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public boolean onTouch(View view, MotionEvent event) {
 
                 chageButtonImage();
-                popWindows.dismiss();
+//                popWindows.dismiss();
                 return false;
             }
         });
     }
 
+    private void setFourBtnListener(View view) {
+        yuyinImg = view.findViewById(R.id.yuyin_btn);
+        shoudianImg = view.findViewById(R.id.shoudian_btn);
+        shipingImg = view.findViewById(R.id.shiping_btn);
+        dianhuaImg = view.findViewById(R.id.dianhua_btn);
+        yuyinImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Activity_two_level_function_voice.class));
+            }
+        });
 
+        shoudianImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Activity_two_level_function_light.class));
+            }
+        });
+
+        shipingImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Activity_two_level_function_video.class));
+            }
+        });
+
+        dianhuaImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Activity_two_level_function_conversation.class));
+            }
+        });
+    }
 
 
 }

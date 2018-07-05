@@ -34,6 +34,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation files('libs/bdasr_V3_20180320_9066860.jar')
-    compile 'cn.bmob.android:bmob-sdk:3.6.2'
+    implementation 'cn.bmob.android:bmob-sdk:3.6.2'
 
 }
