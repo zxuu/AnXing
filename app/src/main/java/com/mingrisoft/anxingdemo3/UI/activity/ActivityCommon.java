@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.mingrisoft.anxingdemo3.R;
 import com.mingrisoft.anxingdemo3.UI.baidu.OnlineSetting;
 import com.mingrisoft.anxingdemo3.UI.recognization.InFileStream;

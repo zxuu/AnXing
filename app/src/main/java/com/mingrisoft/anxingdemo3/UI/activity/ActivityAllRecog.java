@@ -13,7 +13,7 @@ public class ActivityAllRecog extends ActivityRecog {
     {
         descText = "所有识别参数一起的示例。请先参照之前的3个识别示例。\n";
 
-        enableOffline = true; // 请确认不使用离线命令词功能后，改为false
+        enableOffline = false; // 请确认不使用离线命令词功能后，改为false
     }
 
     public ActivityAllRecog() {

@@ -43,6 +43,7 @@ import com.amap.api.maps.model.PolylineOptions;
 import com.mingrisoft.anxingdemo3.R;
 import com.mingrisoft.anxingdemo3.UI.ClusterItem;
 import com.mingrisoft.anxingdemo3.UI.ClusterOverlay;
+import com.mingrisoft.anxingdemo3.UI.model.BirthPlaces;
 import com.mingrisoft.anxingdemo3.UI.model.ClusterClickListener;
 import com.mingrisoft.anxingdemo3.UI.model.ClusterRender;
 import com.mingrisoft.anxingdemo3.UI.model.RegionItem;
@@ -58,6 +59,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 public class FragmentMap  extends android.support.v4.app.Fragment implements AMap.OnMapLoadedListener
         , AMap.OnMapClickListener, LocationSource, AMapLocationListener, View.OnClickListener,ClusterRender,ClusterClickListener{
@@ -78,16 +84,18 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
     private TimerTask mTimerTask;
     private Timer mTimer = new Timer();
 
-    //-------zxu-------------
+    //---zxu---
     private int clusterRadius = 100;
     private Map<Integer,Drawable> mBackDrawAbles = new HashMap<Integer,Drawable>();
     private ClusterOverlay mClusterOverlay;
-
+    //---zxu---
     private List<LatLng> mOriginList = new ArrayList<LatLng>();
 //    private Polyline mOriginPolyline, mkalmanPolyline;
 //    private CheckBox mOriginbtn, mkalmanbtn;
     private PathSmoothTool mpathSmoothTool;
     //-----------------------
+
+    String TAG = "FragmentMap";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +105,7 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
         //startActivity(new Intent(getContext(),AXMap.class));
         mapView = (MapView)view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
+        Bmob.initialize(getContext(),"43e2eca80dfd913ca7cc0c6b9382be66");
         init();
         return view;
     }
@@ -116,6 +125,9 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         //        mUiSettings.setMyLocationButtonEnabled(true); // 是否显示默认的定位按
         //
+        // 同时使用网络定位和GPS定位,优先返回最高精度的定位结果,以及对应的地址描述信息
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+
         mUiSettings = aMap.getUiSettings();
         aMap.showMapText(true);
         mUiSettings.setCompassEnabled(true);
@@ -316,16 +328,32 @@ public class FragmentMap  extends android.support.v4.app.Fragment implements AMa
         new Thread() {
 
             public void run() {
-                List<ClusterItem> items = new ArrayList<>();
-                //随机100个点
-                for (int i = 0; i < 100; i++) {
-                    double lat  = Math.random() + 38.01522976345486;
-                    double lon = Math.random() + 112.4493324110243;
+                final List<ClusterItem> items = new ArrayList<>();
+//                  随机100个点
+//                for (int i = 0; i < 100; i++) {
+//                    double lat  = Math.random() + 38.01522976345486;
+//                    double lon = Math.random() + 112.4493324110243;
+//
+//                    LatLng latLng = new LatLng(lat, lon, false);
+//                    RegionItem regionItem = new RegionItem(latLng, "test" + i);
+//                    items.add(regionItem);
+//                }
 
-                    LatLng latLng = new LatLng(lat, lon, false);
-                    RegionItem regionItem = new RegionItem(latLng, "test" + i);
-                    items.add(regionItem);
-                }
+                BmobQuery<BirthPlaces> query = new BmobQuery<>();
+                query.findObjects(new FindListener<BirthPlaces>() {
+                    @Override
+                    public void done(List<BirthPlaces> list, BmobException e) {
+                        if (e != null) {
+                            Log.d(TAG, "done: " + e);
+                        } else {
+                            for (BirthPlaces b : list) {
+                                LatLng latLng = new LatLng(Double.parseDouble(b.getLatitude()),Double.parseDouble(b.getLongitude()),false);
+                                RegionItem regionItem = new RegionItem(latLng,"test");
+                                items.add(regionItem);
+                            }
+                        }
+                    }
+                });
 
                 mClusterOverlay = new ClusterOverlay(aMap, items, dp2px(getContext(), clusterRadius), getContext());
                 mClusterOverlay.setClusterRenderer(FragmentMap.this);

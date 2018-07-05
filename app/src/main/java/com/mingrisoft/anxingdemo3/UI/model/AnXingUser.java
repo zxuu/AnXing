@@ -1,4 +1,4 @@
-package com.mingrisoft.anxingdemo3.UI.util;
+package com.mingrisoft.anxingdemo3.UI.model;
 
 import cn.bmob.v3.BmobUser;
 

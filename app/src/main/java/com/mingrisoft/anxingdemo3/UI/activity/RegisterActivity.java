@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mingrisoft.anxingdemo3.R;
-import com.mingrisoft.anxingdemo3.UI.util.AnXingUser;
+import com.mingrisoft.anxingdemo3.UI.model.AnXingUser;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
