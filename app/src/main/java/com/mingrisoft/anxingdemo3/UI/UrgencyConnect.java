@@ -1,12 +1,15 @@
 package com.mingrisoft.anxingdemo3.UI;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.mingrisoft.anxingdemo3.R;
+import com.mingrisoft.anxingdemo3.UI.activity.AddUergenPerson;
 
 public class UrgencyConnect extends AppCompatActivity {
 
@@ -29,5 +32,11 @@ public class UrgencyConnect extends AppCompatActivity {
     {
         firsturgencyconnecter = findViewById(R.id.firstconnecter);
         addurgencyconnecter = findViewById(R.id.addurgencyconnecter);
+        addurgencyconnecter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UrgencyConnect.this, AddUergenPerson.class));
+            }
+        });
     }
 }

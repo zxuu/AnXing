@@ -77,13 +77,13 @@ public class Activity_two_level_function_light extends AppCompatActivity {
                     while (isShanshuo) {
                         open();
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(600);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         close();
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(600);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

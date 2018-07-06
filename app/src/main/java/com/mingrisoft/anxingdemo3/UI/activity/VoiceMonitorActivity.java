@@ -102,6 +102,8 @@ public class VoiceMonitorActivity extends AppCompatActivity {
                     //定位成功回调信息，设置相关消息
                     double currentLat = aMapLocation.getLatitude();//获取纬度
                     double currentLon = aMapLocation.getLongitude();//获取经度
+
+
                     BirthPlaces birthPlaces = new BirthPlaces();
                     birthPlaces.setLatitude(String.valueOf(currentLat));
                     birthPlaces.setLongitude(String.valueOf(currentLon));

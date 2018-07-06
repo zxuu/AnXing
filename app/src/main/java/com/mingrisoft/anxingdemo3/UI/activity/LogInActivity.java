@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.mingrisoft.anxingdemo3.R;
 import com.mingrisoft.anxingdemo3.UI.MainActivity;
+import com.mingrisoft.anxingdemo3.UI.MyApplication;
 import com.mingrisoft.anxingdemo3.UI.model.AnXingUser;
 
 import cn.bmob.v3.Bmob;
@@ -103,6 +104,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     public void done(AnXingUser anXingUser, BmobException e) {
                         if(e==null){
                             toast(" 登录成功");
+                            MyApplication.tel = anXingUser.getTel();
+                            MyApplication.name = anXingUser.getNickName();
                             Intent intent_main = new Intent(LogInActivity.this, MainActivity.class);
                             startActivity(intent_main);
                         }else{

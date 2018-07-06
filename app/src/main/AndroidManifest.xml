@@ -15,30 +15,31 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- end: baidu speech sdk  权限 -->
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--允许程序打开网络套接字-->
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--允许程序设置内置sd卡的写权限-->
+    <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--允许程序访问WiFi网络信息-->
+    <!-- 允许程序访问WiFi网络信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!--允许程序读写手机状态和身份-->
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 允许程序读写手机状态和身份 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
@@ -61,19 +62,23 @@
         <service
             android:name="com.baidu.speech.VoiceRecognitionService"
             android:exported="false" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="d14df14d4ff73130fb9c96c5b53cc32a">
-        </meta-data>
-        <service android:name="com.amap.api.location.APSService">
-        </service>
-        <activity android:name=".UI.MainActivity"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            android:value="d14df14d4ff73130fb9c96c5b53cc32a"></meta-data>
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <service android:name="com.amap.api.location.APSService"></service>
+
+        <activity
+            android:name=".UI.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".UI.SlideHead" />
         <activity android:name=".UI.Userinfo" />
@@ -85,7 +90,6 @@
         <activity android:name=".UI.activity.ActivityOnline" />
         <activity android:name=".UI.activity.ActivityAllRecog" />
         <activity android:name=".UI.baidu.OnlineSetting" />
-
         <activity android:name=".UI.activity.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -93,19 +97,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".UI.activity.RegisterActivity"/>
-        <activity android:name=".UI.activity.Activity_two_level_function_conversation_two"/>
-        <activity android:name=".UI.activity.Activity_two_level_function_conversation"/>
-        <activity android:name=".UI.activity.Activity_two_level_function_voice"/>
-        <activity android:name=".UI.activity.Activity_two_level_function_video"/>
-        <activity android:name=".UI.activity.Activity_two_level_function_light"/>
-
-
-        <activity android:name=".UI.activity.VoiceMonitorActivity"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
+        <activity android:name=".UI.activity.RegisterActivity" />
+        <activity android:name=".UI.activity.Activity_two_level_function_conversation_two" />
+        <activity android:name=".UI.activity.Activity_two_level_function_conversation" />
+        <activity android:name=".UI.activity.Activity_two_level_function_voice" />
+        <activity android:name=".UI.activity.Activity_two_level_function_video" />
+        <activity android:name=".UI.activity.Activity_two_level_function_light" />
+        <activity
+            android:name=".UI.activity.VoiceMonitorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+        <activity android:name=".UI.activity.AddUergenPerson"></activity>
     </application>
 
 </manifest>

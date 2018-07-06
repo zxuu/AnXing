@@ -24,6 +24,15 @@ public class AnXingUser extends BmobUser {
     private String nickName;
     private String sex;
     private int age;
+    private String tel;
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
     public String getNickName() {
         return nickName;
